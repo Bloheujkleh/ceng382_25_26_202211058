@@ -78,10 +78,10 @@ p {
     height: 600px;
 }
 
-
 .login-screen {
-    display: none;/* Sayfa ilk acıldığında gozukmez, sonradan gozukur */
-    position: absolute;/* Sayfanın ortasına yerleştirilir */
+    display: none; /* Başlangıçta flex olarak ayarla */
+    opacity: 0; /* Görünürlüğü gizle */
+    position: absolute;
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -90,14 +90,11 @@ p {
     z-index: 1;
     width: 100%;
     height: 100%;
-    opacity: 0;
     animation: ortayacik 0.9s forwards;
 }
 
-/* ortayacik ile display flex: görünür hale gelir.*/
 @keyframes ortayacik {
     to {
-        display: flex;
         opacity: 1;
     }
 }
@@ -165,3 +162,15 @@ p {
     transform: translateX(-50%);
 }
 
+.clock {
+    font-size: 30px;
+    font-weight: bold;
+    background: linear-gradient(130deg, #46a08c 0%, #1C3F1D 100%, #303030 90%);
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius: 8px;
+    color: white;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
