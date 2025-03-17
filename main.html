@@ -87,7 +87,19 @@
         }
     }
 });
+// Giriş butonuna tıklayınca kontrol et
+document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("button").addEventListener("click", function () {
+            let username = document.querySelector("input[type='text']").value;
+            let password = document.querySelector("input[type='password']").value;
 
-    </script>
+            if (username === "admin" && password === "admin") {
+                window.location.href = "table.html"; // Yönlendirme
+            } else {
+                alert("Invalid username or password!"); // Yanlış giriş mesajı
+            }
+        });
+    });
+</script>
 </body>
 </html>
