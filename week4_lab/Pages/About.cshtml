@@ -1,0 +1,28 @@
+﻿@page
+@model MyBootstrapApp.Pages.AboutModel
+@{
+ViewData["Title"] = "About Us";
+ViewData["HeroTitle"] = "About Us";
+ViewData["HeroSubtitle"] = "Learn more about our company";
+ViewData["HeroButtonLink"] = "#contact";
+ViewData["HeroButtonText"] = "Contact Us";
+}
+<partial name="_Hero" />
+<div class="container mt-5">
+<div class="row">
+<div class="col-md-8">
+<h2>Our Story</h2>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
+justo vel ultricies luctus, nunc nunc tincidunt nunc, eget tincidunt
+nunc nunc vel nunc. Sed euismod, justo vel ultricies luctus, nunc
+nunc
+tincidunt nunc, eget tincidunt nunc nunc vel nunc.
+</p>
+</div>
+<div class="col-md-4">
+<img src="~/images/about-us.jpg" alt="About Us" class="img-fluid rounded"
+/>
+</div>
+</div>
+</div>
