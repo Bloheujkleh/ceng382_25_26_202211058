@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bulent\\Desktop\\week4_1\\ceng382_25_26_202211058\\MyBootstrapApp\\MyBootstrapApp.csproj",
+      "projectUniqueName": "C:\\Users\\bulent\\Desktop\\234324\\ceng382_25_26_202211058\\MyBootstrapApp\\MyBootstrapApp.csproj",
       "projectName": "MyBootstrapApp",
-      "projectPath": "C:\\Users\\bulent\\Desktop\\week4_1\\ceng382_25_26_202211058\\MyBootstrapApp\\MyBootstrapApp.csproj",
+      "projectPath": "C:\\Users\\bulent\\Desktop\\234324\\ceng382_25_26_202211058\\MyBootstrapApp\\MyBootstrapApp.csproj",
       "packagesPath": "C:\\Users\\bulent\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bulent\\Desktop\\week4_1\\ceng382_25_26_202211058\\MyBootstrapApp\\obj\\",
+      "outputPath": "C:\\Users\\bulent\\Desktop\\234324\\ceng382_25_26_202211058\\MyBootstrapApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
