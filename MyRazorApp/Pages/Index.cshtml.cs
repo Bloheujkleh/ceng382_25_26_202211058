@@ -29,7 +29,6 @@ namespace Week5RazorApp.Pages
             }
             return Page();
         }
-
         // OnPostDelete methodu ile item siliniyor
         public IActionResult OnPostDelete(int id)
         {

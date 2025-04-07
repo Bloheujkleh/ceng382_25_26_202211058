@@ -1,5 +1,5 @@
 ﻿@page
-@model Week5RazorApp.Pages.IndexModel
+@model Week5RazorApp.Pages.IndexModel // Backendde Index.cshtml.cs dosyadsında IndexModel sıfına bağlı çalışır demek
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,9 +11,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <!-- Form Alanı -->
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <h3>Add Class</h3>
                 <form method="post">
                     <div class="form-group">
@@ -28,12 +28,14 @@
                         <label for="Description">Description</label>
                         <input type="text" class="form-control" id="Description" name="ClassInfo.Description" required />
                     </div>
-                    <button type="submit" class="btn btn-primary" asp-page-handler="Add">Add Class</button>
+                    <div class="form-group text-center mt-3">
+                    <button type="submit" class="btn btn-info " asp-page-handler="Add">Add Class</button>
+</div>
                 </form>
             </div>
 
             <!-- Tablo Alanı -->
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <h3>Class List</h3>
                 <table class="table">
                     <thead>
@@ -46,21 +48,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ViewData["Classes"] as List<Week5RazorApp.Models.ClassInformationModel>)
-                        {
-                            <tr>
-                                <td>@item.Id</td>
-                                <td>@item.ClassName</td>
-                                <td>@item.StudentCount</td>
-                                <td>@item.Description</td>
-                                <td>
-                                    <form method="post">
-                                        <input type="hidden" name="id" value="@item.Id" />
-                                        <button type="submit" class="btn btn-danger" asp-page-handler="Delete">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            @{
+                            var classList = ViewData["Classes"] as List<Week5RazorApp.Models.ClassInformationModel>;
                         }
+
+                        @if (classList != null)
+                        {
+                            foreach (var item in classList)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.ClassName</td>
+                                    <td>@item.StudentCount</td>
+                                    <td>@item.Description</td>
+                                    <td>
+                                        <form method="post">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-danger" asp-page-handler="Delete">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="5">No class data available.</td></tr>
+                    }
+
                     </tbody>
                 </table>
             </div>
