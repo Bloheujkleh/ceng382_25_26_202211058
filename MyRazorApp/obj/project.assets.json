@@ -5678,11 +5678,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bulent\\Desktop\\WEB DERSİ ODEVLER\\hafta 5 push\\ceng382_25_26_202211058\\MyRazorApp\\MyRazorApp.csproj",
+      "projectUniqueName": "C:\\Users\\bulent\\Desktop\\Yeni klasör (3)\\ceng382_25_26_202211058\\MyRazorApp\\MyRazorApp.csproj",
       "projectName": "MyRazorApp",
-      "projectPath": "C:\\Users\\bulent\\Desktop\\WEB DERSİ ODEVLER\\hafta 5 push\\ceng382_25_26_202211058\\MyRazorApp\\MyRazorApp.csproj",
+      "projectPath": "C:\\Users\\bulent\\Desktop\\Yeni klasör (3)\\ceng382_25_26_202211058\\MyRazorApp\\MyRazorApp.csproj",
       "packagesPath": "C:\\Users\\bulent\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bulent\\Desktop\\WEB DERSİ ODEVLER\\hafta 5 push\\ceng382_25_26_202211058\\MyRazorApp\\obj\\",
+      "outputPath": "C:\\Users\\bulent\\Desktop\\Yeni klasör (3)\\ceng382_25_26_202211058\\MyRazorApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

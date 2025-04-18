@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xl5Ee5GwFnI=",
+  "dgSpecHash": "x78673QcVOY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\bulent\\Desktop\\WEB DERSİ ODEVLER\\hafta 5 push\\ceng382_25_26_202211058\\MyRazorApp\\MyRazorApp.csproj",
+  "projectFilePath": "C:\\Users\\bulent\\Desktop\\Yeni klasör (3)\\ceng382_25_26_202211058\\MyRazorApp\\MyRazorApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\bulent\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.3.0\\microsoft.aspnetcore.antiforgery.2.3.0.nupkg.sha512",
     "C:\\Users\\bulent\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.0\\microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
