@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bulent\\Desktop\\must3\\Ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj": {}
+    "C:\\Users\\bulent\\Desktop\\sil\\ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bulent\\Desktop\\must3\\Ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj": {
+    "C:\\Users\\bulent\\Desktop\\sil\\ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bulent\\Desktop\\must3\\Ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj",
+        "projectUniqueName": "C:\\Users\\bulent\\Desktop\\sil\\ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj",
         "projectName": "LabProject",
-        "projectPath": "C:\\Users\\bulent\\Desktop\\must3\\Ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj",
+        "projectPath": "C:\\Users\\bulent\\Desktop\\sil\\ceng382_25_26_202211058\\Week8_Updated\\LabProject.csproj",
         "packagesPath": "C:\\Users\\bulent\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bulent\\Desktop\\must3\\Ceng382_25_26_202211058\\Week8_Updated\\obj\\",
+        "outputPath": "C:\\Users\\bulent\\Desktop\\sil\\ceng382_25_26_202211058\\Week8_Updated\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,18 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

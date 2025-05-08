@@ -279,12 +279,12 @@
                             int indexNumber = ((Model.PageNumber - 1) * IndexModel.PageSize) + i + 1;
                             <tr>
                                 <td><span class="badge bg-secondary">@indexNumber</span></td>
-                                <td>@item.ClassName</td>
-                                <td>@item.StudentCount</td>
+                                <td>@item.Name</td>
+                                <td>@item.PersonCount</td>
                                 <td>@item.Description</td>
                                 <td>
                                     <button type="button" class="btn modern-btn modern-btn-warning btn-sm" title="Edit"
-                                            onclick="editClass('@item.Id', '@item.ClassName', '@item.StudentCount', '@item.Description')">
+                                            onclick="editClass('@item.Id', '@item.Name', '@item.PersonCount', '@item.Description')">
                                         Edit
                                     </button>
                                     <form method="post" asp-page-handler="DeleteClass" class="d-inline">

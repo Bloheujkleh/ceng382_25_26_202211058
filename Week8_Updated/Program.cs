@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 
 using Microsoft.Extensions.Logging; // Add this
+using Microsoft.EntityFrameworkCore;
+using ceng382_25_26_202211058.Data;
 
 
 
@@ -22,7 +24,11 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<ILoggerFactory, LoggerFactory>(); // Add this
 
-builder.Services.AddTransient(typeof(ILogger<>), typeof(Logger<>));  // And this
+builder.Services.AddTransient(typeof(ILogger<>), typeof(Logger<>));  // And this
+
+// Add and configure the database context
+builder.Services.AddDbContext<SchoolDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDbConnection")));
 
 
 
@@ -68,7 +74,7 @@ app.UseStaticFiles(); // Make sure static files are served (CSS, JS, etc.)
 
 
 
-app.UseRouting();  // Add routing middleware
+app.UseRouting();  // Add routing middleware
 
 
 

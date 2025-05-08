@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using LabProject.Models;
-using LabProject.Helpers;
+using ceng382_25_26_202211058.Data;
+using ceng382_25_26_202211058.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
@@ -10,14 +11,15 @@ namespace LabProject.Pages
 {
     public class IndexModel : PageModel
     {
-        // Veriler
-        public static List<ClassInformationModel> ClassList { get; set; } = new();
-        public static List<ClassInformationModel> DisplayClassList { get; set; } = new();
+        private readonly SchoolDbContext _context;
 
-        // Sayfada gösterilecek veriler
-        public List<ClassInformationTable> PagedList { get; set; } = new();
+        public IndexModel(SchoolDbContext context)
+        {
+            _context = context;
+        }
 
-        // Arama ve sayfa bilgileri
+        public List<Class> PagedList { get; set; } = new();
+
         [BindProperty(SupportsGet = true)]
         public string? Filter { get; set; }
 
@@ -27,9 +29,24 @@ namespace LabProject.Pages
         public int TotalPages { get; set; }
         public const int PageSize = 10;
 
-        // Sayfa yüklendiğinde çalışır
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            // Veritabanında hiç veri yoksa 100 örnek veri ekle
+            if (!await _context.Classes.AnyAsync())
+            {
+                var random = new Random();
+                var exampleClasses = Enumerable.Range(1, 100).Select(i => new Class
+                {
+                    Name = $"Class {i}",
+                    PersonCount = 20 + (i % 10),
+                    Description = $"Auto-generated class #{i}",
+                    IsActive = true
+                }).ToList();
+
+                _context.Classes.AddRange(exampleClasses);
+                await _context.SaveChangesAsync();
+            }
+
             // Kullanıcı giriş kontrolü
             string? sessionUsername = HttpContext.Session.GetString("username");
             string? sessionToken = HttpContext.Session.GetString("token");
@@ -47,117 +64,67 @@ namespace LabProject.Pages
                 return RedirectToPage("/Login");
             }
 
-            // İlk yüklemede örnek veri oluştur
-            if (ClassList.Count == 0)
-            {
-                for (int i = 1; i <= 100; i++)
-                {
-                    ClassList.Add(new ClassInformationModel
-                    {
-                        Id = i,
-                        ClassName = $"Class {i}",
-                        StudentCount = 20 + (i % 10),
-                        Description = $"Auto-generated class #{i}"
-                    });
-                }
-            }
-
-            // Filtreleme ve sayfalama işlemleri
-            var query = ClassList.AsQueryable();
+            // Veritabanından verileri çek
+            var query = _context.Classes.AsQueryable();
 
             if (!string.IsNullOrEmpty(Filter))
             {
-                query = query.Where(x => x.ClassName.Contains(Filter, System.StringComparison.OrdinalIgnoreCase));
+                query = query.Where(x => x.Name.Contains(Filter));
             }
 
-            TotalPages = (int)Math.Ceiling(query.Count() / (double)PageSize);
-            DisplayClassList = query.ToList();
+            TotalPages = (int)Math.Ceiling(await query.CountAsync() / (double)PageSize);
 
-            PagedList = query
+            PagedList = await query
+                .OrderBy(x => x.Id)
                 .Skip((PageNumber - 1) * PageSize)
                 .Take(PageSize)
-                .Select(x => new ClassInformationTable
-                {
-                    Id = x.Id,
-                    ClassName = x.ClassName,
-                    StudentCount = x.StudentCount,
-                    Description = x.Description
-                })
-                .ToList();
+                .ToListAsync();
 
             return Page();
         }
 
         // --- Export Sadece Bu Sayfadaki Verileri JSON olarak indir ---
-       public IActionResult OnGetExportCurrentPage()
-{
-    string? sessionUsername = HttpContext.Session.GetString("username");
-    if (string.IsNullOrEmpty(sessionUsername))
-    {
-        return RedirectToPage("/Login", new { ErrorMessage = "You need to log in to export data." });
-    }
-
-    // PagedList'i tekrar oluşturuyoruz
-    var query = ClassList.AsQueryable();
-
-    if (!string.IsNullOrEmpty(Filter))
-    {
-        query = query.Where(x => x.ClassName.Contains(Filter, StringComparison.OrdinalIgnoreCase));
-    }
-
-    PagedList = query
-        .Skip((PageNumber - 1) * PageSize)
-        .Take(PageSize)
-        .Select(x => new ClassInformationTable
-        {
-            Id = x.Id,
-            ClassName = x.ClassName,
-            StudentCount = x.StudentCount,
-            Description = x.Description
-        })
-        .ToList();
-
-    // JSON olarak dönüyoruz
-    var json = Utils.Instance.ToJson(PagedList, null);
-    return File(Encoding.UTF8.GetBytes(json), "application/json", "current_page_export.json");
-}
-
+        // Bu fonksiyonu kaldırıyorum çünkü artık JSON export gerekmiyor ve Utils yok.
 
         // --- Class Ekleme ---
-        public IActionResult OnPostAddClass(string NewClassName, int NewStudentCount, string NewDescription)
+        public async Task<IActionResult> OnPostAddClassAsync(string NewClassName, int NewStudentCount, string NewDescription)
         {
-            int newId = ClassList.Any() ? ClassList.Max(c => c.Id) + 1 : 1;
-            ClassList.Add(new ClassInformationModel
+            var newClass = new Class
             {
-                Id = newId,
-                ClassName = NewClassName,
-                StudentCount = NewStudentCount,
-                Description = NewDescription
-            });
+                Name = NewClassName,
+                PersonCount = NewStudentCount,
+                Description = NewDescription,
+                IsActive = true // veya formdan alabilirsin
+            };
+
+            _context.Classes.Add(newClass);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage(new { PageNumber, Filter });
         }
 
         // --- Class Silme ---
-        public IActionResult OnPostDeleteClass(int DeleteId)
+        public async Task<IActionResult> OnPostDeleteClassAsync(int DeleteId)
         {
-            var item = ClassList.FirstOrDefault(c => c.Id == DeleteId);
+            var item = await _context.Classes.FindAsync(DeleteId);
             if (item != null)
             {
-                ClassList.Remove(item);
+                _context.Classes.Remove(item);
+                await _context.SaveChangesAsync();
             }
             return RedirectToPage(new { PageNumber, Filter });
         }
 
         // --- Class Güncelleme ---
-        public IActionResult OnPostEditClass(int EditId, string EditName, int EditStudentCount, string EditDescription)
+        public async Task<IActionResult> OnPostEditClassAsync(int EditId, string EditName, int EditStudentCount, string EditDescription)
         {
-            var item = ClassList.FirstOrDefault(c => c.Id == EditId);
+            var item = await _context.Classes.FindAsync(EditId);
             if (item != null)
             {
-                item.ClassName = EditName;
-                item.StudentCount = EditStudentCount;
+                item.Name = EditName;
+                item.PersonCount = EditStudentCount;
                 item.Description = EditDescription;
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage(new { PageNumber, Filter });
