@@ -1,0 +1,155 @@
+@page
+@model LabProject.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #e0e7ff 0%, #f0f2f5 100%);
+        background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(2px);
+    }
+    .login-card {
+        width: 100%;
+        max-width: 540px;
+        padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+        border-radius: 28px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        background: rgba(255,255,255,0.92);
+        position: relative;
+        transition: box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-card:hover {
+        box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+    }
+    .login-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 8px rgba(30,64,175,0.10);
+    }
+    .login-icon svg {
+        width: 36px;
+        height: 36px;
+        color: #fff;
+    }
+    .login-hint {
+        margin-bottom: 2rem;
+        font-size: 1.08rem;
+    }
+    .alert-danger {
+        background: #ffe5e5;
+        color: #b91c1c;
+        border: 1px solid #fca5a5;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.2rem;
+        text-align: center;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+    }
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
+        background: #f8fafc;
+        transition: border 0.2s;
+    }
+    .form-control:focus {
+        border: 1.5px solid #2563eb;
+        outline: none;
+        background: #fff;
+    }
+    .btn-primary {
+        background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+        border: none;
+        border-radius: 8px;
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 1rem 0;
+        transition: background 0.2s;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+    }
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+    }
+    h2.text-center.mb-4 {
+        margin-bottom: 2.2rem !important;
+        font-size: 2.2rem;
+    }
+    .mb-3 {
+        margin-bottom: 1.5rem !important;
+    }
+    media (max-width: 600px) {
+        .login-card {
+            max-width: 95vw;
+            padding: 1.5rem 0.5rem 1rem 0.5rem;
+        }
+        .login-hint {
+            font-size: 0.92rem;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </div>
+        <h2 class="text-center mb-4" style="font-weight:700; color:#1e293b;">Login</h2>
+        <div class="login-hint">Kullanıcı adı: <b>admin</b> &nbsp; | &nbsp; Şifre: <b>admin</b></div>
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger">@Model.ErrorMessage</div>
+        }
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
+                <input asp-for="Username" class="form-control" placeholder="Kullanıcı adınızı girin" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Şifre</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi girin" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:22px;height:22px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" /></svg>
+                Giriş Yap
+            </button>
+        </form>
+    </div>
+</div>

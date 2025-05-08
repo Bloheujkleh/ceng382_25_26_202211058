@@ -1,0 +1,361 @@
+﻿@page
+@model LabProject.Pages.IndexModel
+@{
+    ViewData["Title"] = "Class Management";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #1a1a40 0%, #23234f 40%, #3a1c71 100%);
+        background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1500&q=80');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+    }
+    /* Yıldız efekti */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        pointer-events: none;
+        background: url('https://svgshare.com/i/12uG.svg'); /* SVG yıldızlar */
+        opacity: 0.25;
+        z-index: 0;
+    }
+    .modern-card {
+        background: linear-gradient(135deg, rgba(58,28,113,0.93) 0%, rgba(44,62,80,0.93) 100%);
+        border-radius: 32px;
+        box-shadow: 0 16px 48px rgba(58,28,113,0.25), 0 2px 8px rgba(0,0,0,0.10);
+        padding: 3.2rem 2.2rem 2.2rem 2.2rem;
+        margin-bottom: 2.5rem;
+        border: none;
+        min-height: 650px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        z-index: 1;
+    }
+    .modern-header {
+        font-size: 2.1rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #a4508b 0%, #5f0a87 50%, #23234f 100%);
+        color: #fff;
+        border-radius: 32px 32px 0 0;
+        padding: 1.5rem 0;
+        text-align: center;
+        letter-spacing: 0.03em;
+        margin-bottom: 1.7rem;
+        box-shadow: 0 2px 12px rgba(164,80,139,0.18);
+    }
+    .modern-btn {
+        border-radius: 12px !important;
+        font-weight: 600;
+        font-size: 1.13rem;
+        box-shadow: 0 2px 12px rgba(90,24,154,0.10);
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.4rem;
+    }
+    .modern-btn-success {
+        background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%) !important;
+        color: #fff !important;
+        border: none !important;
+    }
+    .modern-btn-success:hover {
+        background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%) !important;
+        color: #fff !important;
+        box-shadow: 0 4px 16px rgba(67,206,162,0.18);
+    }
+    .modern-btn-outline-danger {
+        border: 2px solid #ff6a88 !important;
+        color: #ff6a88 !important;
+        background: #fff !important;
+    }
+    .modern-btn-outline-danger:hover {
+        background: #ff6a88 !important;
+        color: #fff !important;
+        box-shadow: 0 4px 16px rgba(255,106,136,0.18);
+    }
+    .modern-btn-warning {
+        background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%) !important;
+        color: #23234f !important;
+        border: none !important;
+    }
+    .modern-btn-warning:hover {
+        background: linear-gradient(90deg, #ffd200 0%, #f7971e 100%) !important;
+        color: #23234f !important;
+        box-shadow: 0 4px 16px rgba(255,210,0,0.18);
+    }
+    .modern-table {
+        border-radius: 18px;
+        overflow: hidden;
+        background: rgba(255,255,255,0.97);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+    }
+    .modern-table th, .modern-table td {
+        vertical-align: middle !important;
+        font-size: 1.12rem;
+    }
+    .modern-table th {
+        background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+        color: #fff;
+        border: none;
+    }
+    .modern-table tr {
+        border-bottom: 1px solid #e5e7eb;
+        transition: background 0.2s;
+    }
+    .modern-table tr:hover {
+        background: #f1f5f9;
+    }
+    .modern-table tr:last-child {
+        border-bottom: none;
+    }
+    .modern-table .badge {
+        font-size: 1rem;
+        padding: 0.5em 1em;
+        border-radius: 8px;
+    }
+    .pagination .page-link {
+        border-radius: 50% !important;
+        font-weight: 600;
+        color: #2563eb;
+        border: none;
+        margin: 0 0.2rem;
+        box-shadow: 0 2px 6px rgba(37,99,235,0.07);
+    }
+    .pagination .active .page-link, .pagination .page-link.bg-success {
+        background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%) !important;
+        color: #fff !important;
+    }
+    .modal-content {
+        border-radius: 18px;
+    }
+    .modal-header {
+        border-radius: 18px 18px 0 0;
+    }
+    .modal-footer {
+        border-radius: 0 0 18px 18px;
+    }
+    .form-control {
+        border-radius: 10px;
+        border: 1.5px solid #a4508b;
+        font-size: 1.13rem;
+        padding: 1.1rem 1.2rem;
+        background: #23234f;
+        color: #fff;
+        transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .form-control:focus {
+        border: 1.5px solid #43cea2;
+        outline: none;
+        background: #3a1c71;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(67,206,162,0.10);
+    }
+    .form-control::placeholder {
+        color: #e0e7ff;
+        opacity: 1;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+    }
+    .modern-card label, .modern-card .form-label {
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 1.08rem;
+    }
+    .mb-3 {
+        margin-bottom: 2.2rem !important;
+    }
+    @@media (max-width: 900px) {
+        .modern-card { padding: 1.2rem 0.5rem; min-height: 320px; }
+        .modern-header { font-size: 1.2rem; }
+    }
+    .search-container {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .big-search {
+        font-size: 1.35rem;
+        padding: 1.3rem 1.5rem;
+        border-radius: 18px;
+        background: #23234f;
+        color: #fff;
+        border: 2px solid #43cea2;
+        box-shadow: 0 2px 12px rgba(67,206,162,0.10);
+        margin-bottom: 1.2rem;
+    }
+    .big-search:focus {
+        border: 2px solid #a4508b;
+        background: #3a1c71;
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(164,80,139,0.13);
+    }
+    .big-search-btn {
+        font-size: 1.18rem;
+        padding: 1.1rem 0;
+        border-radius: 18px;
+        width: 100%;
+        margin-top: 0.2rem;
+    }
+    @@media (max-width: 900px) {
+        .big-search { font-size: 1.1rem; padding: 1rem 1rem; }
+        .big-search-btn { font-size: 1rem; padding: 0.8rem 0; }
+    }
+    .search-btn-small {
+        font-size: 1rem;
+        padding: 0.45rem 1.2rem;
+        border-radius: 12px;
+        min-width: 90px;
+        margin-top: 0.3rem;
+        box-shadow: 0 2px 8px rgba(67,206,162,0.10);
+    }
+    @@media (max-width: 900px) {
+        .big-search { font-size: 1.1rem; padding: 1rem 1rem; }
+        .search-btn-small { font-size: 0.95rem; padding: 0.4rem 1rem; min-width: 70px; }
+    }
+</style>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sol: Add Class ve Search -->
+        <div class="col-lg-4 mb-4 d-flex flex-column align-items-stretch">
+            <div class="search-container mb-5">
+                <form method="get" class="d-flex flex-column align-items-stretch">
+                    <input type="text" name="Filter" value="@Model.Filter" class="form-control big-search" placeholder="Search by Class Name...">
+                    <button class="btn modern-btn modern-btn-success search-btn-small mt-2 align-self-start" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="modern-card flex-grow-1 d-flex flex-column justify-content-center mt-4">
+                <div class="modern-header">
+                    Add New Class
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="AddClass" class="d-grid gap-3">
+                        <input type="text" name="NewClassName" class="form-control" placeholder="Class Name" required />
+                        <input type="number" name="NewStudentCount" class="form-control" placeholder="Student Count" required />
+                        <input type="text" name="NewDescription" class="form-control" placeholder="Description" />
+                        <button type="submit" class="btn modern-btn modern-btn-success w-100">Add Class</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Sağ: Tablo ve üstünde butonlar -->
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-end align-items-center mb-4 gap-2">
+                <button type="button" class="btn modern-btn modern-btn-success" onclick="exportCurrentPage()">Export JSON</button>
+                <form method="get" asp-page="/Logout">
+                    <button type="submit" class="btn modern-btn modern-btn-outline-danger">Logout</button>
+                </form>
+            </div>
+            <div class="table-responsive modern-table">
+                <table class="table table-hover table-bordered align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Class Name</th>
+                            <th>Students</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @for (int i = 0; i < Model.PagedList.Count; i++)
+                        {
+                            var item = Model.PagedList[i];
+                            int indexNumber = ((Model.PageNumber - 1) * IndexModel.PageSize) + i + 1;
+                            <tr>
+                                <td><span class="badge bg-secondary">@indexNumber</span></td>
+                                <td>@item.ClassName</td>
+                                <td>@item.StudentCount</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <button type="button" class="btn modern-btn modern-btn-warning btn-sm" title="Edit"
+                                            onclick="editClass('@item.Id', '@item.ClassName', '@item.StudentCount', '@item.Description')">
+                                        Edit
+                                    </button>
+                                    <form method="post" asp-page-handler="DeleteClass" class="d-inline">
+                                        <input type="hidden" name="DeleteId" value="@item.Id" />
+                                        <button class="btn btn-danger btn-sm modern-btn" title="Delete">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination -->
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                            <a class="page-link rounded-circle mx-1 @(Model.PageNumber == i ? "bg-success text-white" : "")"
+                               asp-page="./Index" asp-route-PageNumber="@i" asp-route-Filter="@Model.Filter">
+                                @i
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" asp-page-handler="EditClass">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header bg-warning text-white rounded-top-4">
+                    <h5 class="modal-title">✏️ Edit Class</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body d-grid gap-3">
+                    <input type="hidden" id="EditId" name="EditId" />
+                    <input type="text" id="EditName" name="EditName" class="form-control" required />
+                    <input type="number" id="EditStudentCount" name="EditStudentCount" class="form-control" required />
+                    <input type="text" id="EditDescription" name="EditDescription" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning w-100"> Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function exportCurrentPage() {
+            let pageNumber = "@Model.PageNumber";
+            let filter = "@Model.Filter";
+            let url = "/Index?handler=ExportCurrentPage&PageNumber=" + pageNumber + "&Filter=" + encodeURIComponent(filter || "");
+
+            window.location.href = url;
+        }
+
+        function editClass(id, name, count, desc) {
+            document.getElementById("EditId").value = id;
+            document.getElementById("EditName").value = name;
+            document.getElementById("EditStudentCount").value = count;
+            document.getElementById("EditDescription").value = desc;
+
+            const modal = new bootstrap.Modal(document.getElementById("editModal"));
+            modal.show();
+        }
+    </script>
+}
