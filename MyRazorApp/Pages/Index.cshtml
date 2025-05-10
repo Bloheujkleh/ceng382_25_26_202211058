@@ -1,0 +1,116 @@
+﻿@page
+@model Week5RazorApp.Pages.IndexModel
+
+<div class="container py-4">
+    <div class="row">
+        <!-- Ekleme Formu -->
+        <div class="col-md-5 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title text-primary mb-3">Add New Class</h4>
+                    <form method="post">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Class Name</label>
+                            <input type="text" class="form-control" asp-for="ClassInfo.ClassName" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Student Count</label>
+                            <input type="number" class="form-control" asp-for="ClassInfo.StudentCount" min="1" required />
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control" asp-for="ClassInfo.Description" required />
+                        </div>
+                        <button type="submit" class="btn btn-success w-100" asp-page-handler="Add">
+                            <i class="bi bi-plus-circle me-1"></i> Add Class
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tablo ve Filtreleme -->
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title text-primary mb-3">Class List</h4>
+
+                    <!-- Filtreleme -->
+                    <form method="get" class="row g-2 mb-4">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="Search by name..." asp-for="ClassNameFilter" />
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" placeholder="Min Students" asp-for="MinStudentCount" />
+                        </div>
+                        <div class="col-sm-2 d-grid">
+                            <button type="submit" class="btn btn-outline-primary">Filter</button>
+                        </div>
+                    </form>
+
+                    <!-- Tablo -->
+                    @if (Model.PaginatedClasses.Count == 0)
+                    {
+                        <div class="alert alert-warning">No classes found with current filter.</div>
+                    }
+                    else
+                    {
+                        <table class="table table-striped table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Class Name</th>
+                                    <th>Students</th>
+                                    <th>Description</th>
+                                    <th style="width: 100px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PaginatedClasses)
+                                {
+                                    <tr>
+                                        <td>@item.ClassName</td>
+                                        <td>@item.StudentCount</td>
+                                        <td>@item.Description</td>
+                                        <td>
+                                            <form method="post">
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <button type="submit" class="btn btn-sm btn-danger" asp-page-handler="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                    <!-- Sayfalama -->
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item @(Model.PaginatedClasses.HasPreviousPage ? "" : "disabled")">
+                                <a class="page-link" asp-route-pageIndex="@(Model.PaginatedClasses.PageIndex - 1)"
+                                   asp-route-classNameFilter="@Model.ClassNameFilter"
+                                   asp-route-minStudentCount="@Model.MinStudentCount">Previous</a>
+                            </li>
+                            @for (int i = 1; i <= Model.PaginatedClasses.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.PaginatedClasses.PageIndex ? "active" : "")">
+                                    <a class="page-link" asp-route-pageIndex="@i"
+                                       asp-route-classNameFilter="@Model.ClassNameFilter"
+                                       asp-route-minStudentCount="@Model.MinStudentCount">@i</a>
+                                </li>
+                            }
+                            <li class="page-item @(Model.PaginatedClasses.HasNextPage ? "" : "disabled")">
+                                <a class="page-link" asp-route-pageIndex="@(Model.PaginatedClasses.PageIndex + 1)"
+                                   asp-route-classNameFilter="@Model.ClassNameFilter"
+                                   asp-route-minStudentCount="@Model.MinStudentCount">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
